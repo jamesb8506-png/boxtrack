@@ -1,0 +1,110 @@
+import { Users, TrendingUp, Plus } from 'lucide-react';
+import { useAppData } from '../contexts/AppDataContext';
+import { evaluationService } from '../services/evaluationService';
+import { computeBoxerProgress } from '../services/progressService';
+import { BoxerCard } from '../components/boxer/BoxerCard';
+import { EmptyState } from '../components/ui/EmptyState';
+import type { Route } from '../types/route';
+import { formatDateTime } from '../utils/age';
+
+export function HomePage({ onNavigate }: { onNavigate: (r: Route) => void }) {
+  const { boxers, evaluations, skills } = useAppData();
+  const activeBoxers = boxers.filter((b) => b.active);
+
+  const boxersWithProgress = activeBoxers.map((b) => {
+    const statusMap = evaluationService.getCurrentStatusMap(b.id);
+    const progress = computeBoxerProgress(b.id, skills, statusMap);
+    return { boxer: b, progress };
+  });
+
+  const avgProgress =
+    boxersWithProgress.length > 0
+      ? boxersWithProgress.reduce((sum, b) => sum + b.progress.progressRate, 0) / boxersWithProgress.length
+      : 0;
+
+  const recentEvals = evaluations.slice(0, 5);
+
+  return (
+    <div className="px-4 py-4">
+      <div className="grid grid-cols-2 gap-3 mb-5">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
+          <div className="flex items-center gap-2 text-zinc-500 mb-1">
+            <Users size={14} />
+            <span className="text-xs font-medium">Boxeurs actifs</span>
+          </div>
+          <p className="text-2xl font-bold text-zinc-100">{activeBoxers.length}</p>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
+          <div className="flex items-center gap-2 text-zinc-500 mb-1">
+            <TrendingUp size={14} />
+            <span className="text-xs font-medium">Progression moy.</span>
+          </div>
+          <p className="text-2xl font-bold text-zinc-100">{Math.round(avgProgress * 100)}%</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-bold text-zinc-100">Boxeurs</h2>
+        <button
+          onClick={() => onNavigate({ name: 'boxer-form' })}
+          className="flex items-center gap-1 text-xs font-semibold text-red-500"
+        >
+          <Plus size={14} /> Ajouter
+        </button>
+      </div>
+
+      {boxersWithProgress.length === 0 ? (
+        <EmptyState
+          icon={Users}
+          title="Aucun boxeur pour le moment"
+          description="Créez votre premier boxeur pour commencer le suivi."
+          action={
+            <button
+              onClick={() => onNavigate({ name: 'boxer-form' })}
+              className="px-4 py-2.5 rounded-xl bg-red-600 text-white text-sm font-semibold"
+            >
+              Créer un boxeur
+            </button>
+          }
+        />
+      ) : (
+        <div className="space-y-2.5 mb-6">
+          {boxersWithProgress.slice(0, 5).map(({ boxer, progress }) => (
+            <BoxerCard
+              key={boxer.id}
+              boxer={boxer}
+              progressRate={progress.progressRate}
+              onClick={() => onNavigate({ name: 'boxer-profile', boxerId: boxer.id })}
+            />
+          ))}
+        </div>
+      )}
+
+      {recentEvals.length > 0 && (
+        <>
+          <h2 className="text-base font-bold text-zinc-100 mb-3">Dernières évaluations</h2>
+          <div className="space-y-2">
+            {recentEvals.map((ev) => {
+              const boxer = boxers.find((b) => b.id === ev.boxerId);
+              const skill = skills.find((s) => s.id === ev.skillId);
+              if (!boxer || !skill) return null;
+              return (
+                <div key={ev.id} className="bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3">
+                  <p className="text-sm text-zinc-200">
+                    <span className="font-semibold">
+                      {boxer.firstName} {boxer.lastName}
+                    </span>{' '}
+                    · {skill.name}
+                  </p>
+                  <p className="text-xs text-zinc-500 mt-0.5">
+                    {ev.status} · {formatDateTime(ev.date)}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
