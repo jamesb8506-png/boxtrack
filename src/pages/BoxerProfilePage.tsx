@@ -35,7 +35,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
       <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-4">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h2 className="text-xl font-bold text-zinc-100">
+            <h2 className="font-display text-xl font-semibold tracking-wide text-zinc-100">
               {boxer.firstName} {boxer.lastName}
             </h2>
             <p className="text-sm text-zinc-500">
@@ -64,7 +64,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
           <span className="text-xs px-2 py-1 rounded-md bg-zinc-800 text-zinc-400">{boxer.level}</span>
           {boxer.category && <span className="text-xs px-2 py-1 rounded-md bg-zinc-800 text-zinc-400">{boxer.category}</span>}
           {boxer.club && <span className="text-xs px-2 py-1 rounded-md bg-zinc-800 text-zinc-400">{boxer.club}</span>}
-          {!boxer.active && <span className="text-xs px-2 py-1 rounded-md bg-red-950 text-red-400">Inactif</span>}
+          {!boxer.active && <span className="text-xs px-2 py-1 rounded-md bg-zinc-800 text-zinc-500">Inactif</span>}
         </div>
 
         {boxer.notes && <p className="text-sm text-zinc-400 border-t border-zinc-800 pt-3">{boxer.notes}</p>}
@@ -73,7 +73,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
 
       <button
         onClick={() => onNavigate({ name: 'evaluate', boxerId: boxer.id })}
-        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm mb-5 active:bg-red-700"
+        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gold text-black font-semibold text-sm mb-5 active:bg-gold-dark"
       >
         <ClipboardEdit size={18} /> Évaluer ce boxeur
       </button>
@@ -82,28 +82,28 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
         <>
           <div className="grid grid-cols-3 gap-2.5 mb-5">
             <StatBox label="Validées" value={progress.validated} color="text-emerald-400" />
-            <StatBox label="Non validées" value={progress.notValidated} color="text-amber-400" />
+            <StatBox label="Non validées" value={progress.notValidated} color="text-orange-400" />
             <StatBox label="Non évaluées" value={progress.notEvaluated} color="text-zinc-400" />
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 mb-5">
             <div className="flex justify-between text-sm mb-1.5">
               <span className="text-zinc-400">Progression globale</span>
-              <span className="font-semibold text-zinc-100">{Math.round(progress.progressRate * 100)}%</span>
+              <span className="font-display font-semibold text-gold">{Math.round(progress.progressRate * 100)}%</span>
             </div>
             <div className="h-2 bg-zinc-800 rounded-full overflow-hidden mb-3">
-              <div className="h-full bg-red-600 rounded-full" style={{ width: `${progress.progressRate * 100}%` }} />
+              <div className="h-full bg-gold rounded-full" style={{ width: `${progress.progressRate * 100}%` }} />
             </div>
             <div className="flex justify-between text-sm mb-1.5">
               <span className="text-zinc-400">Taux d'évaluation</span>
-              <span className="font-semibold text-zinc-100">{Math.round(progress.evaluationRate * 100)}%</span>
+              <span className="font-display font-semibold text-zinc-100">{Math.round(progress.evaluationRate * 100)}%</span>
             </div>
             <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
               <div className="h-full bg-zinc-500 rounded-full" style={{ width: `${progress.evaluationRate * 100}%` }} />
             </div>
           </div>
 
-          <h3 className="text-base font-bold text-zinc-100 mb-3">Progression par domaine</h3>
+          <h3 className="font-display text-base font-semibold tracking-wide text-zinc-100 mb-3">Progression par domaine</h3>
           <div className="space-y-2 mb-5">
             {progress.byDomain.map((d) => (
               <div key={d.domain} className="bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3">
@@ -114,7 +114,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
                   </span>
                 </div>
                 <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-red-600 rounded-full" style={{ width: `${d.progressRate * 100}%` }} />
+                  <div className="h-full bg-gold rounded-full" style={{ width: `${d.progressRate * 100}%` }} />
                 </div>
               </div>
             ))}
@@ -122,7 +122,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
 
           {progress.priorities.length > 0 && (
             <>
-              <h3 className="text-base font-bold text-zinc-100 mb-3">Priorités de travail</h3>
+              <h3 className="font-display text-base font-semibold tracking-wide text-zinc-100 mb-3">Priorités de travail</h3>
               <div className="space-y-2">
                 {progress.priorities.slice(0, 6).map(({ skill, reason }) => (
                   <button
@@ -159,7 +159,7 @@ export function BoxerProfilePage({ boxerId, onNavigate }: { boxerId: string; onN
 function StatBox({ label, value, color }: { label: string; value: number; color: string }) {
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-center">
-      <p className={`text-xl font-bold ${color}`}>{value}</p>
+      <p className={`font-display text-2xl font-semibold ${color}`}>{value}</p>
       <p className="text-[11px] text-zinc-500 mt-0.5">{label}</p>
     </div>
   );

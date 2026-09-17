@@ -33,7 +33,7 @@ export function BoxerCard({ boxer, progressRate, onClick }: { boxer: Boxer; prog
         </p>
         {progressRate !== undefined && (
           <div className="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden max-w-[160px]">
-            <div className="h-full bg-red-600 rounded-full" style={{ width: `${Math.round(progressRate * 100)}%` }} />
+            <div className="h-full bg-gold rounded-full" style={{ width: `${Math.round(progressRate * 100)}%` }} />
           </div>
         )}
       </div>

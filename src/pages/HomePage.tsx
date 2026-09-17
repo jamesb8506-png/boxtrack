@@ -26,28 +26,28 @@ export function HomePage({ onNavigate }: { onNavigate: (r: Route) => void }) {
 
   return (
     <div className="px-4 py-4">
-      <div className="grid grid-cols-2 gap-3 mb-5">
+      <div className="flex flex-col gap-3 mb-5">
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
           <div className="flex items-center gap-2 text-zinc-500 mb-1">
             <Users size={14} />
             <span className="text-xs font-medium">Boxeurs actifs</span>
           </div>
-          <p className="text-2xl font-bold text-zinc-100">{activeBoxers.length}</p>
+          <p className="font-display text-3xl font-semibold text-zinc-100">{activeBoxers.length}</p>
         </div>
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
           <div className="flex items-center gap-2 text-zinc-500 mb-1">
             <TrendingUp size={14} />
             <span className="text-xs font-medium">Progression moy.</span>
           </div>
-          <p className="text-2xl font-bold text-zinc-100">{Math.round(avgProgress * 100)}%</p>
+          <p className="font-display text-3xl font-semibold text-gold">{Math.round(avgProgress * 100)}%</p>
         </div>
       </div>
 
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-base font-bold text-zinc-100">Boxeurs</h2>
+        <h2 className="font-display text-base font-semibold tracking-wide text-zinc-100">Boxeurs</h2>
         <button
           onClick={() => onNavigate({ name: 'boxer-form' })}
-          className="flex items-center gap-1 text-xs font-semibold text-red-500"
+          className="flex items-center gap-1 text-xs font-semibold text-gold"
         >
           <Plus size={14} /> Ajouter
         </button>
@@ -61,7 +61,7 @@ export function HomePage({ onNavigate }: { onNavigate: (r: Route) => void }) {
           action={
             <button
               onClick={() => onNavigate({ name: 'boxer-form' })}
-              className="px-4 py-2.5 rounded-xl bg-red-600 text-white text-sm font-semibold"
+              className="px-4 py-2.5 rounded-xl bg-gold text-black text-sm font-semibold"
             >
               Créer un boxeur
             </button>
@@ -82,7 +82,7 @@ export function HomePage({ onNavigate }: { onNavigate: (r: Route) => void }) {
 
       {recentEvals.length > 0 && (
         <>
-          <h2 className="text-base font-bold text-zinc-100 mb-3">Dernières évaluations</h2>
+          <h2 className="font-display text-base font-semibold tracking-wide text-zinc-100 mb-3">Dernières évaluations</h2>
           <div className="space-y-2">
             {recentEvals.map((ev) => {
               const boxer = boxers.find((b) => b.id === ev.boxerId);

@@ -2,9 +2,11 @@
   "name": "BoxTrack Coach",
   "short_name": "BoxTrack",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#09090b",
-  "theme_color": "#09090b",
+  "orientation": "portrait",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
   "description": "Application de suivi des boxeurs",
   "icons": [
     {

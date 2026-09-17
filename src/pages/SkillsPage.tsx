@@ -6,6 +6,7 @@ import { SKILL_DOMAINS } from '../types';
 import type { EvaluationStatus, SkillDomain } from '../types';
 import { SkillCard } from '../components/skill/SkillCard';
 import { EmptyState } from '../components/ui/EmptyState';
+import { FilterSheet, FilterButton } from '../components/ui/FilterSheet';
 import type { Route } from '../types/route';
 
 const STATUS_FILTERS: EvaluationStatus[] = ['Non évaluée', 'Non validée', 'Validée'];
@@ -21,6 +22,8 @@ export function SkillsPage({
   const [query, setQuery] = useState('');
   const [domainFilter, setDomainFilter] = useState<SkillDomain | 'all'>('all');
   const [statusFilter, setStatusFilter] = useState<EvaluationStatus | 'all'>('all');
+  const [domainSheetOpen, setDomainSheetOpen] = useState(false);
+  const [statusSheetOpen, setStatusSheetOpen] = useState(false);
 
   const statusMap = boxerId ? evaluationService.getCurrentStatusMap(boxerId) : new Map();
 
@@ -37,6 +40,15 @@ export function SkillsPage({
     });
   }, [skills, query, domainFilter, statusFilter, boxerId]);
 
+  const domainOptions = [
+    { value: 'all' as const, label: 'Tous les domaines' },
+    ...SKILL_DOMAINS.map((d) => ({ value: d, label: d })),
+  ];
+  const statusOptions = [
+    { value: 'all' as const, label: 'Tous les statuts' },
+    ...STATUS_FILTERS.map((s) => ({ value: s, label: s })),
+  ];
+
   return (
     <div className="px-4 py-4">
       <div className="relative mb-3">
@@ -45,25 +57,22 @@ export function SkillsPage({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher une compétence..."
-          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-red-600"
+          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-gold"
         />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-2 -mx-4 px-4 no-scrollbar">
-        <FilterChip active={domainFilter === 'all'} onClick={() => setDomainFilter('all')} label="Tous les domaines" />
-        {SKILL_DOMAINS.map((d) => (
-          <FilterChip key={d} active={domainFilter === d} onClick={() => setDomainFilter(d)} label={d} />
-        ))}
+      <div className="flex flex-col gap-2 mb-4">
+        <FilterButton
+          label={domainFilter === 'all' ? 'Domaine : tous' : `Domaine : ${domainFilter}`}
+          onClick={() => setDomainSheetOpen(true)}
+        />
+        {boxerId && (
+          <FilterButton
+            label={statusFilter === 'all' ? 'Statut : tous' : `Statut : ${statusFilter}`}
+            onClick={() => setStatusSheetOpen(true)}
+          />
+        )}
       </div>
-
-      {boxerId && (
-        <div className="flex gap-2 overflow-x-auto pb-3 mb-1 -mx-4 px-4 no-scrollbar">
-          <FilterChip active={statusFilter === 'all'} onClick={() => setStatusFilter('all')} label="Tous les statuts" />
-          {STATUS_FILTERS.map((s) => (
-            <FilterChip key={s} active={statusFilter === s} onClick={() => setStatusFilter(s)} label={s} />
-          ))}
-        </div>
-      )}
 
       <p className="text-xs text-zinc-600 mb-3">{filtered.length} compétence(s)</p>
 
@@ -81,19 +90,23 @@ export function SkillsPage({
           ))}
         </div>
       )}
-    </div>
-  );
-}
 
-function FilterChip({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`shrink-0 text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border ${
-        active ? 'bg-red-600 border-red-600 text-white' : 'bg-zinc-900 border-zinc-800 text-zinc-400'
-      }`}
-    >
-      {label}
-    </button>
+      <FilterSheet
+        open={domainSheetOpen}
+        title="Filtrer par domaine"
+        options={domainOptions}
+        value={domainFilter}
+        onSelect={setDomainFilter}
+        onClose={() => setDomainSheetOpen(false)}
+      />
+      <FilterSheet
+        open={statusSheetOpen}
+        title="Filtrer par statut"
+        options={statusOptions}
+        value={statusFilter}
+        onSelect={setStatusFilter}
+        onClose={() => setStatusSheetOpen(false)}
+      />
+    </div>
   );
 }

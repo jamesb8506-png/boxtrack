@@ -20,7 +20,7 @@ export function HistoryPage({ boxerId, onNavigate }: { boxerId?: string; onNavig
       <select
         value={filterBoxerId}
         onChange={(e) => setFilterBoxerId(e.target.value)}
-        className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3 text-sm text-zinc-100 mb-4 focus:outline-none focus:border-red-600"
+        className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3 text-sm text-zinc-100 mb-4 focus:outline-none focus:border-gold"
       >
         <option value="all">Tous les boxeurs</option>
         {boxers.map((b) => (

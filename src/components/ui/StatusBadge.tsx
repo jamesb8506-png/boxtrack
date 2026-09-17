@@ -9,7 +9,7 @@ const CONFIG: Record<EvaluationStatus, { icon: typeof Circle; className: string;
   },
   'Non validée': {
     icon: XCircle,
-    className: 'bg-amber-950 text-amber-400 border-amber-800',
+    className: 'bg-orange-950 text-orange-400 border-orange-800',
     label: 'Non validée',
   },
   Validée: {

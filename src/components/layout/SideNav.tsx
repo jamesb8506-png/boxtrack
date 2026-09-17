@@ -14,10 +14,10 @@ export function SideNav({ current, onNavigate }: { current: RouteName; onNavigat
   return (
     <nav className="hidden sm:flex flex-col w-60 shrink-0 bg-zinc-950 border-r border-zinc-800 p-4">
       <div className="flex items-center gap-2 px-2 mb-8 mt-2">
-        <div className="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center">
-          <Dumbbell size={18} className="text-white" />
+        <div className="w-9 h-9 rounded-lg bg-gold flex items-center justify-center">
+          <Dumbbell size={18} className="text-black" />
         </div>
-        <span className="text-zinc-100 font-bold text-lg tracking-tight">BoxTrack</span>
+        <span className="font-display text-zinc-100 font-semibold text-lg tracking-wide">BoxTrack</span>
       </div>
       <div className="flex flex-col gap-1">
         {ITEMS.map(({ name, label, icon: Icon }) => {
@@ -27,7 +27,7 @@ export function SideNav({ current, onNavigate }: { current: RouteName; onNavigat
               key={name}
               onClick={() => onNavigate({ name })}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left transition-colors ${
-                active ? 'bg-red-600/15 text-red-500' : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
+                active ? 'bg-gold/15 text-gold' : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
               }`}
             >
               <Icon size={18} strokeWidth={2.2} />

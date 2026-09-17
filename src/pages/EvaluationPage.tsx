@@ -7,6 +7,7 @@ import type { SkillDomain, MasteryLevel, EvaluationStatus } from '../types';
 import { QuickEvalCard } from '../components/evaluation/QuickEvalCard';
 import { BoxerCard } from '../components/boxer/BoxerCard';
 import { EmptyState } from '../components/ui/EmptyState';
+import { FilterSheet, FilterButton } from '../components/ui/FilterSheet';
 import { computeBoxerProgress } from '../services/progressService';
 import type { Route } from '../types/route';
 
@@ -20,6 +21,7 @@ export function EvaluationPage({
   const { boxers, skills, addEvaluation } = useAppData();
   const [query, setQuery] = useState('');
   const [domainFilter, setDomainFilter] = useState<SkillDomain | 'all'>('all');
+  const [domainSheetOpen, setDomainSheetOpen] = useState(false);
   const coachName = 'Coach'; // Nom du coach : personnalisable dans Réglages (V+)
 
   const boxer = boxerId ? boxers.find((b) => b.id === boxerId) : null;
@@ -66,11 +68,16 @@ export function EvaluationPage({
     addEvaluation({ boxerId: boxer!.id, skillId, status, mastery, comment, coach: coachName });
   }
 
+  const domainOptions = [
+    { value: 'all' as const, label: 'Tous les domaines' },
+    ...SKILL_DOMAINS.map((d) => ({ value: d, label: d })),
+  ];
+
   return (
     <div className="px-4 py-4">
       <button
         onClick={() => onNavigate({ name: 'evaluate' })}
-        className="text-xs font-semibold text-red-500 mb-3"
+        className="text-xs font-semibold text-gold mb-3"
       >
         ← Changer de boxeur
       </button>
@@ -88,15 +95,15 @@ export function EvaluationPage({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher une compétence..."
-          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-red-600"
+          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-gold"
         />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-1 -mx-4 px-4 no-scrollbar">
-        <FilterChip active={domainFilter === 'all'} onClick={() => setDomainFilter('all')} label="Tous" />
-        {SKILL_DOMAINS.map((d) => (
-          <FilterChip key={d} active={domainFilter === d} onClick={() => setDomainFilter(d)} label={d} />
-        ))}
+      <div className="mb-4">
+        <FilterButton
+          label={domainFilter === 'all' ? 'Domaine : tous' : `Domaine : ${domainFilter}`}
+          onClick={() => setDomainSheetOpen(true)}
+        />
       </div>
 
       <div className="space-y-3">
@@ -109,19 +116,15 @@ export function EvaluationPage({
           />
         ))}
       </div>
-    </div>
-  );
-}
 
-function FilterChip({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`shrink-0 text-xs font-medium px-3 py-2 rounded-lg whitespace-nowrap border ${
-        active ? 'bg-red-600 border-red-600 text-white' : 'bg-zinc-900 border-zinc-800 text-zinc-400'
-      }`}
-    >
-      {label}
-    </button>
+      <FilterSheet
+        open={domainSheetOpen}
+        title="Filtrer par domaine"
+        options={domainOptions}
+        value={domainFilter}
+        onSelect={setDomainFilter}
+        onClose={() => setDomainSheetOpen(false)}
+      />
+    </div>
   );
 }

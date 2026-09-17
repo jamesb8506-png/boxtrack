@@ -77,7 +77,7 @@ export function BoxerForm({
   }
 
   const inputClass =
-    'w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3 text-zinc-100 text-base placeholder:text-zinc-600 focus:outline-none focus:border-red-600';
+    'w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3.5 py-3 text-zinc-100 text-base placeholder:text-zinc-600 focus:outline-none focus:border-gold';
   const labelClass = 'block text-sm font-medium text-zinc-400 mb-1.5';
 
   return (
@@ -180,7 +180,7 @@ export function BoxerForm({
             type="checkbox"
             checked={values.active}
             onChange={(e) => set('active', e.target.checked)}
-            className="w-5 h-5 rounded accent-red-600"
+            className="w-5 h-5 rounded accent-gold"
           />
           <span className="text-sm text-zinc-300">Boxeur actif</span>
         </label>
@@ -194,7 +194,7 @@ export function BoxerForm({
         >
           Annuler
         </button>
-        <button type="submit" className="flex-1 py-3.5 rounded-xl bg-red-600 text-white font-semibold text-sm active:bg-red-700">
+        <button type="submit" className="flex-1 py-3.5 rounded-xl bg-gold text-black font-semibold text-sm active:bg-gold-dark">
           {boxer ? 'Enregistrer' : 'Créer le boxeur'}
         </button>
       </div>

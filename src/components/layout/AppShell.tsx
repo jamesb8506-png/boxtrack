@@ -1,7 +1,8 @@
-import { type ReactNode } from 'react';
-import { Settings, ChevronLeft } from 'lucide-react';
-import { BottomNav } from './BottomNav';
+import { type ReactNode, useState } from 'react';
+import { Menu, ChevronLeft } from 'lucide-react';
+import { NavDrawer } from './NavDrawer';
 import { SideNav } from './SideNav';
+import { FabEvaluate } from './FabEvaluate';
 import type { Route } from '../../types/route';
 
 export function AppShell({
@@ -19,12 +20,14 @@ export function AppShell({
   onBack?: () => void;
   children: ReactNode;
 }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex">
+    <div className="min-h-screen bg-black text-zinc-100 flex">
       <SideNav current={route.name} onNavigate={onNavigate} />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 bg-zinc-950/95 backdrop-blur border-b border-zinc-800 px-4 py-3 flex items-center gap-3 pt-[env(safe-area-inset-top)]">
+        <header className="sticky top-0 z-30 bg-black/95 backdrop-blur border-b border-zinc-800 px-4 py-3 flex items-center gap-3 pt-[env(safe-area-inset-top)]">
           {showBack ? (
             <button
               onClick={onBack}
@@ -34,26 +37,26 @@ export function AppShell({
               <ChevronLeft size={22} className="text-zinc-300" />
             </button>
           ) : (
-            <div className="w-9 h-9 rounded-lg bg-red-600 flex items-center justify-center sm:hidden">
-              <span className="text-white font-bold text-sm">BT</span>
-            </div>
-          )}
-          <h1 className="text-lg font-bold text-zinc-100 flex-1 truncate">{title}</h1>
-          {!showBack && (
             <button
-              onClick={() => onNavigate({ name: 'settings' })}
-              className="w-9 h-9 flex items-center justify-center rounded-full active:bg-zinc-800 sm:hidden"
-              aria-label="Réglages"
+              onClick={() => setDrawerOpen(true)}
+              className="w-9 h-9 -ml-1.5 flex items-center justify-center rounded-full active:bg-zinc-800 sm:hidden"
+              aria-label="Ouvrir le menu"
             >
-              <Settings size={20} className="text-zinc-400" />
+              <Menu size={22} className="text-zinc-300" />
             </button>
           )}
+          <h1 className="font-display text-lg font-semibold tracking-wide text-zinc-100 flex-1 truncate">{title}</h1>
         </header>
 
-        <main className="flex-1 pb-20 sm:pb-6">{children}</main>
+        <main className="flex-1 pb-8">{children}</main>
       </div>
 
-      <BottomNav current={route.name} onNavigate={onNavigate} />
+      <NavDrawer open={drawerOpen} current={route.name} onNavigate={onNavigate} onClose={() => setDrawerOpen(false)} />
+
+      <FabEvaluate
+        onClick={() => onNavigate({ name: 'evaluate' })}
+        hidden={route.name === 'evaluate' || route.name === 'skill-detail'}
+      />
     </div>
   );
 }

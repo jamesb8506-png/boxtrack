@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +11,8 @@ body,
 }
 
 body {
-  background-color: #09090b; /* zinc-950 */
+  background-color: #000000;
+  font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: contain;
 }
@@ -25,4 +28,51 @@ body {
 input[type='date']::-webkit-calendar-picker-indicator {
   filter: invert(1);
   opacity: 0.6;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-fade-in {
+  animation: fade-in 0.18s ease-out;
+}
+
+@keyframes slide-in-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-in-left,
+  .animate-fade-in,
+  .animate-slide-in-up {
+    animation: none;
+  }
 }

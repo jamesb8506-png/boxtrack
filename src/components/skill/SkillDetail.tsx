@@ -15,7 +15,7 @@ function Section({
   return (
     <div className="mb-5">
       <div className="flex items-center gap-2 mb-2">
-        <Icon size={16} className="text-red-500" />
+        <Icon size={16} className="text-gold" />
         <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wide">{title}</h3>
       </div>
       {children}
@@ -29,7 +29,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="space-y-1.5">
       {items.map((item, i) => (
         <li key={i} className="text-sm text-zinc-400 flex gap-2">
-          <span className="text-red-600 mt-1 shrink-0">•</span>
+          <span className="text-gold mt-1 shrink-0">•</span>
           <span>{item}</span>
         </li>
       ))}
@@ -44,7 +44,7 @@ export function SkillDetail({ skill }: { skill: Skill }) {
     <div className="px-4 py-4">
       <div className="mb-4">
         <span className="text-xs font-medium px-2 py-1 rounded-md bg-zinc-800 text-zinc-400">{skill.domain}</span>
-        <span className="text-xs font-medium px-2 py-1 rounded-md bg-red-950 text-red-400 ml-2">{skill.importance}</span>
+        <span className="text-xs font-medium px-2 py-1 rounded-md bg-gold/15 text-gold-light ml-2">{skill.importance}</span>
       </div>
 
       <p className="text-zinc-300 text-[15px] leading-relaxed mb-5">{skill.description}</p>

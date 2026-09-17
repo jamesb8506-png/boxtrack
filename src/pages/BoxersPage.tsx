@@ -26,7 +26,7 @@ export function BoxersPage({ onNavigate }: { onNavigate: (r: Route) => void }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Rechercher un boxeur..."
-          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-red-600"
+          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-gold"
         />
       </div>
 
@@ -36,13 +36,13 @@ export function BoxersPage({ onNavigate }: { onNavigate: (r: Route) => void }) {
             type="checkbox"
             checked={showInactive}
             onChange={(e) => setShowInactive(e.target.checked)}
-            className="w-4 h-4 rounded accent-red-600"
+            className="w-4 h-4 rounded accent-gold"
           />
           Afficher les inactifs
         </label>
         <button
           onClick={() => onNavigate({ name: 'boxer-form' })}
-          className="flex items-center gap-1 text-xs font-semibold text-red-500"
+          className="flex items-center gap-1 text-xs font-semibold text-gold"
         >
           <Plus size={14} /> Ajouter
         </button>

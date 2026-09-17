@@ -40,7 +40,7 @@ export function SkillDetailPage({
   return (
     <div>
       <div className="px-4 pt-4">
-        <h2 className="text-xl font-bold text-zinc-100">{skill.name}</h2>
+        <h2 className="font-display text-xl font-semibold tracking-wide text-zinc-100">{skill.name}</h2>
         {boxer && (
           <div className="flex items-center gap-2 mt-2">
             <span className="text-sm text-zinc-500">
@@ -56,7 +56,7 @@ export function SkillDetailPage({
       {boxer && (
         <div className="px-4 pb-6">
           <div className="flex items-center gap-2 mb-3">
-            <HistoryIcon size={16} className="text-red-500" />
+            <HistoryIcon size={16} className="text-gold" />
             <h3 className="text-sm font-semibold text-zinc-300 uppercase tracking-wide">Historique pour ce boxeur</h3>
           </div>
           {history.length === 0 ? (

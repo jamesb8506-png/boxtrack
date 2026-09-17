@@ -36,16 +36,16 @@ export function QuickEvalCard({
         <StatusBadge status={saved ? currentStatus : currentStatus} size="sm" />
       </div>
 
-      <div className="flex gap-2 mb-2">
+      <div className="flex flex-col gap-2 mb-2">
         <button
           onClick={() => handleQuickSave('Validée')}
-          className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-emerald-950 text-emerald-400 font-semibold text-sm active:bg-emerald-900 border border-emerald-900"
+          className="w-full flex items-center justify-center gap-1.5 py-3.5 rounded-xl bg-emerald-950 text-emerald-400 font-semibold text-sm active:bg-emerald-900 border border-emerald-900"
         >
           <Check size={16} /> Validée
         </button>
         <button
           onClick={() => handleQuickSave('Non validée')}
-          className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-amber-950 text-amber-400 font-semibold text-sm active:bg-amber-900 border border-amber-900"
+          className="w-full flex items-center justify-center gap-1.5 py-3.5 rounded-xl bg-orange-950 text-orange-400 font-semibold text-sm active:bg-orange-900 border border-orange-900"
         >
           <X size={16} /> Non validée
         </button>
@@ -70,7 +70,7 @@ export function QuickEvalCard({
                   onClick={() => setMastery(mastery === m ? null : m)}
                   className={`text-xs px-2.5 py-1.5 rounded-lg border font-medium ${
                     mastery === m
-                      ? 'bg-red-600 border-red-600 text-white'
+                      ? 'bg-gold border-gold text-black'
                       : 'bg-zinc-800 border-zinc-700 text-zinc-400'
                   }`}
                 >
@@ -83,7 +83,7 @@ export function QuickEvalCard({
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Commentaire rapide..."
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-red-600 min-h-[60px] resize-none"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-gold min-h-[60px] resize-none"
           />
         </div>
       )}
